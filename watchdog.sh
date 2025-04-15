@@ -10,34 +10,36 @@ fi
 
 #------------------------------------------------
 # CONSTS
-QMLIST="$(qm list | tail -n +2)"
-VMID=$1
+VMID="$1"
+QMSTAT="$(/usr/sbin/qm status $VMID )" > /dev/nul> /dev/null0
 
 #------------------------------------------------ 
 # CODE
 
 # check if container exists
-if ! echo "$QMLIST" | grep -q " $VMID " 
+if  echo $QMSTAT | grep  "not exist" 
 then
     printf "\nNo such VM!\n"
     exit 1
 fi
 
-VMSTATE=$(echo "$QMLIST" | grep " $VMID " | awk '{print $3}')
+
+VMSTATE=$(echo "$QMSTAT" | awk '{print $2}')
+#echo $VMSTATE
 
 case $VMSTATE in
 
     "running")
-        printf "VM %s" "$VMID" "allready running."
-        echo ""
+        #printf "VM %s" "$VMID" "allready running."
+        #echo ""
         exit 0
     ;;
 
     "stopped")
-        printf "Starting VM %s" "$VMID""."
-        echo ""  # To lazy to fix output spacing 
-        qm start "$VMID"
-        exit 0
+        printf "\nStarting VM %s" "$VMID\n"
+        #echo ""  # To lazy to fix output spacing 
+        /usr/sbin/qm start "$VMID"
+        exit 1
 
     ;;
 
