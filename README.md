@@ -6,6 +6,8 @@ Takes in a single argument in form of VMID.
 
 `./watchdog.sh <REPLACE_WITH_VMID>` 
 
+I'll be maybe developing it further on my own [gitea](https://tea.shupogaki.org/YuruC3/pmpw) cuz it feels nicer to use than Github.
+
 ## Requirements
 Copy/clone code into your directory 
 
